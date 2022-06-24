@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class Mover : MonoBehaviour
 {
     NavMeshAgent agent;
-    [SerializeField] Camera myCamera;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -13,16 +13,8 @@ public class Mover : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Move(Vector3 point)
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
-        {
-           Ray ray = myCamera.ScreenPointToRay(Input.mousePosition);
-           RaycastHit hit;
-           if(Physics.Raycast(ray, out hit))
-           {
-                agent.destination = hit.point;
-           }
-        }
+        agent.SetDestination(point);
     }
 }
