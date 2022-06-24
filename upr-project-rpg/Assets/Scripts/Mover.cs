@@ -35,10 +35,12 @@ public class Mover : MonoBehaviour
     }
     public void FollowTarget(Interactable focus)
     {
-        target = focus.transform;
+        target = focus.placeToStop;
         agent.updateRotation = false;
         agent.stoppingDistance = focus.Radius * .8f;
+        
     }
+    
     public void StopFollowing()
     {
         target = null;

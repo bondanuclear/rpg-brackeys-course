@@ -37,10 +37,7 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100f, layerMask))
             {
                 Unfocus();
-                // start moving with left mouse button
                 mover.Move(hit.point);
-                // TO DO stop other interactions
-
             }
         }
         if(Input.GetKeyDown(KeyCode.Mouse1))
@@ -54,6 +51,7 @@ public class PlayerController : MonoBehaviour
                {
                     Debug.Log("Hit an interactable + " + hit.transform.name + " object! ");
                     SetFocus(interactable);
+                    
                }
 
             }
@@ -61,11 +59,19 @@ public class PlayerController : MonoBehaviour
     }
     public void SetFocus(Interactable newFocus)
     {
-        focus = newFocus;
-        mover.FollowTarget(focus);
+        if(focus != newFocus)
+        {
+            if(focus!=null)
+                focus.OnDefocused();
+            focus = newFocus;
+            mover.FollowTarget(focus);
+        }
+        newFocus.OnFocused(transform);
     }
     public void Unfocus()
     {
+        if(focus != null)
+            focus.OnDefocused();
         focus = null;
         mover.StopFollowing();
     }
