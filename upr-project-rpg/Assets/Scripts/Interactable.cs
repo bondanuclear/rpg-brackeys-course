@@ -46,6 +46,7 @@ public class Interactable : MonoBehaviour
     // Update is called once per frame
    
     private void OnDrawGizmosSelected() {
+        
         Gizmos.color = Color.white;
         if(placeToStop != null)
         Gizmos.DrawWireSphere(placeToStop.position, radius);
