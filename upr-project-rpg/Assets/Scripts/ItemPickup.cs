@@ -6,7 +6,7 @@ using UnityEngine;
 public class ItemPickup : Interactable
 {
     [SerializeField] Item item;
-    Inventory inventory;
+    
  
     public override void Interact()
     {
@@ -17,11 +17,12 @@ public class ItemPickup : Interactable
     private void PickUp()
     {
         Debug.Log("Picked up an item " + item.name);
-        inventory = FindObjectOfType<Inventory>();
+        
 
-        if(inventory.checkCapacity())
+        if(Inventory.instance.checkCapacity())
         {
-            inventory.AddItem(item);
+
+            Inventory.instance.AddItem(item);
             Destroy(gameObject);
         }
             

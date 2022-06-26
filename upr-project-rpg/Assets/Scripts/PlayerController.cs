@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 [RequireComponent(typeof(Mover))]
 public class PlayerController : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(EventSystem.current.IsPointerOverGameObject()) return;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
