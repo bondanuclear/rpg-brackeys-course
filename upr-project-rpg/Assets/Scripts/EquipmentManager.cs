@@ -18,11 +18,14 @@ public class EquipmentManager : MonoBehaviour
     #endregion
     public delegate void OnEquipmentChanged(Equipment newItem, Equipment oldItem);
     public OnEquipmentChanged onEquipmentChanged;
+    [SerializeField] SlotEquipment[] equipmentSlots; 
+    public Transform parentEquipment;
     [SerializeField] Equipment[] slots;
     int sizeOfSlots;
     private void Start() {
         sizeOfSlots = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         slots = new Equipment[sizeOfSlots];
+        equipmentSlots = parentEquipment.GetComponentsInChildren<SlotEquipment>(true);
     }
     public void Equip(Equipment equipment)
     {
@@ -31,6 +34,7 @@ public class EquipmentManager : MonoBehaviour
         if(slots[slotIndex] != null)
         {
             oldEquipment = slots[slotIndex];
+            
             Inventory.instance.AddItem(oldEquipment);    
         }
         if(onEquipmentChanged != null)
@@ -38,7 +42,7 @@ public class EquipmentManager : MonoBehaviour
             onEquipmentChanged.Invoke(equipment, oldEquipment);
         }
         slots[slotIndex] = equipment;
-        
+        equipmentSlots[slotIndex].AddEquipmentSlot(equipment);
     }
     public void Unequip(int slotIndex)
     {
@@ -65,4 +69,5 @@ public class EquipmentManager : MonoBehaviour
             UnequipAll();
         }
     }
+
 }
