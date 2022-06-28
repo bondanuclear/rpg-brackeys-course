@@ -18,7 +18,7 @@ public class Interactable : MonoBehaviour
     private void Start() {
         if (placeToStop == null) placeToStop = transform;
     }
-    void Update()
+    private void Update()
     {
         
         if (isFocused && !hasInteracted)

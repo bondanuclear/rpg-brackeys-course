@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     ChestInventory chest;
     [SerializeField] GameObject InventoryUI;
     [SerializeField] GameObject EquipmentUI;
+    [SerializeField] GameObject chestUI;
     [SerializeField] Transform parentTransform;
     InventorySlot[] slots;
     [SerializeField] Transform chestParenTransform;
@@ -42,16 +43,28 @@ public class UIManager : MonoBehaviour
     {
         if(Input.GetButtonDown("Inventory"))
         {
-            OpenUI();
+            OpenCloseUI();
         }
     }
 
-    public void OpenUI()
+    public void OpenCloseUI()
     {
         InventoryUI.SetActive(!InventoryUI.activeSelf);
         EquipmentUI.SetActive(!EquipmentUI.activeSelf);
     }
-
+    public void ProcessUI(bool isActive)
+    {
+        if(InventoryUI.activeSelf == !isActive && EquipmentUI.activeSelf == !isActive)
+        {
+            InventoryUI.SetActive(isActive);
+            EquipmentUI.SetActive(isActive);
+        }
+        
+    }
+    public void ProcessChestUI(bool isActive)
+    {
+        chestUI.SetActive(isActive);
+    }
     public void UpdateUI()
     {
         for(int i = 0; i < slots.Length; i++)

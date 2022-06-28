@@ -9,20 +9,30 @@ public class InventorySlot : MonoBehaviour
     public Button removeButton;
     public Button stashButton;
     GameObject chestUI;
+    bool isChestUIActive = false;
     Item item;
-    private void Start() {
-        chestUI = GameObject.Find("ChestInventory");
+    
+    
+    private void Update() {
+        chestUI = GameObject.FindGameObjectWithTag("Chest");
+        if(chestUI != null)
+        {
+            if (chestUI.activeSelf == true)
+            {
+                //Debug.LogWarning("ACTIVE SELF CHANGED");
+                isChestUIActive = true;
+            }
+        }
+       
     }
     public void AddItem(Item newItem)
     {
         item = newItem;
         icon.sprite = item.sprite;
         icon.enabled = true;
-        removeButton.interactable = true;
-        if(chestUI.activeSelf == true)
-        {
-            stashButton.interactable = true;
-        }
+        removeButton.interactable = true;  
+        stashButton.interactable = true;
+      
     }
     public void ClearSlot()
     {
@@ -40,8 +50,12 @@ public class InventorySlot : MonoBehaviour
     }
     public void OnStashButtonClicked()
     {
-        ChestInventory.instance.AddToChest(item);
-        Inventory.instance.RemoveItem(item);
+        if(isChestUIActive == true)
+        {
+            ChestInventory.instance.AddToChest(item);
+            Inventory.instance.RemoveItem(item);
+        }
+        
     }
     public void UseItem()
     {

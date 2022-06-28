@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class ChestInteract : Interactable
 {
+    GameObject chestUI;
+   
     public override void Interact()
     {
         base.Interact();
-        FindObjectOfType<UIManager>().OpenUI();
+        UIManager uiManager = FindObjectOfType<UIManager>();
+        uiManager.ProcessUI(true);
+        uiManager.ProcessChestUI(true);   
+        
     }
+    
+        
 }
