@@ -46,6 +46,7 @@ public class EquipmentManager : MonoBehaviour
     }
     public void Unequip(int slotIndex)
     {
+        Equipment oldItem = slots[slotIndex];
         if(slots[slotIndex] != null)
         {
             Inventory.instance.AddItem(slots[slotIndex]);
@@ -53,7 +54,7 @@ public class EquipmentManager : MonoBehaviour
         }
         if(onEquipmentChanged != null)
         {
-            onEquipmentChanged.Invoke(null, slots[slotIndex]);
+            onEquipmentChanged.Invoke(null, oldItem);
         }
     }
     public void UnequipAll()
@@ -63,11 +64,23 @@ public class EquipmentManager : MonoBehaviour
            Unequip(i);
         }
     }
-    private void Update() {
-        if(Input.GetKeyDown(KeyCode.U))
+    public int GetEquipmentIndex(Equipment equipment)
+    {
+        for(int i = 0; i < slots.Length; i++)
         {
-            UnequipAll();
+            if(slots[i] == equipment)
+            {
+                return i;
+            }
         }
+        return 111;
     }
+    /////
+    // private void Update() {
+    //     if(Input.GetKeyDown(KeyCode.U))
+    //     {
+    //         Unequip(0);
+    //     }
+    // }
 
 }

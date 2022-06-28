@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     Inventory inventory;
     [SerializeField] GameObject InventoryUI;
+    [SerializeField] GameObject EquipmentUI;
     [SerializeField] Transform parentTransform;
     InventorySlot[] slots;
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class UIManager : MonoBehaviour
         if(Input.GetButtonDown("Inventory"))
         {
             InventoryUI.SetActive(!InventoryUI.activeSelf);
+            EquipmentUI.SetActive(!EquipmentUI.activeSelf);
         }
     }
     public void UpdateUI()
@@ -34,7 +36,7 @@ public class UIManager : MonoBehaviour
             }                
             else slots[i].ClearSlot();
         }
-        Debug.Log("UPDATING UI");
+        //Debug.Log("UPDATING UI");
 
     }
 }

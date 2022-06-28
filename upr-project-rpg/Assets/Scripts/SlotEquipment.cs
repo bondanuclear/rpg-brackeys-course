@@ -12,12 +12,14 @@ public class SlotEquipment : MonoBehaviour
         equipment = newEquipment;
         icon.sprite = equipment.sprite;
         icon.enabled = true;
+        
     }
     public void RemoveEquipmentSlot()
     {
         if (equipment != null)
         {
-            Inventory.instance.AddItem(equipment);
+            // Inventory.instance.AddItem(equipment);
+            EquipmentManager.instance.Unequip(EquipmentManager.instance.GetEquipmentIndex(equipment));
         }
         equipment = null;
         icon.sprite = null;

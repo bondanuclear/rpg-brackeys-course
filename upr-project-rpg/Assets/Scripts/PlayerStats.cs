@@ -19,6 +19,9 @@ public class PlayerStats : CharacterStats
             armor.AddModifier(newItem.defenseModifier);
             
         }
+        // Debug.LogWarning("CALLING UPDATE MODIFIERS");
+        // Debug.Log("NEW ITEM = " + newItem);
+        // Debug.Log("OLD ITEM = " + oldItem);
         if(oldItem != null)
         {
             damage.RemoveModifier(oldItem.attackModifier);
