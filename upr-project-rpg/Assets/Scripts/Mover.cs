@@ -25,7 +25,7 @@ public class Mover : MonoBehaviour
         Vector3 direction = (target.position - transform.position).normalized;
         //Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
         Quaternion rotation = Quaternion.LookRotation(new Vector3(direction.x, 0f, direction.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 4f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation,Time.deltaTime * 4f);
     }
 
     // Update is called once per frame

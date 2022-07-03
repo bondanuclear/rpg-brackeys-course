@@ -8,11 +8,20 @@ public class ChestManager : MonoBehaviour
     UIManager uiManager;
     [SerializeField] float distanceToUnableChest = 5f;
     bool isUsed = false;
+    [SerializeField] private float speedOfOpening;
+    [SerializeField] Transform chestUpperPart;
     // Start is called before the first frame update
     void Start()
     {
        uiManager = FindObjectOfType<UIManager>();
-        target = PlayerManager.instance.player.transform;
+       target = PlayerManager.instance.player.transform;
+    }
+    public void OpenChestModel()
+    {
+        Vector3 rotationVector = new Vector3(-90,0,0);
+        chestUpperPart.localRotation = Quaternion.Slerp(chestUpperPart.localRotation, Quaternion.Euler(rotationVector), Time.deltaTime * speedOfOpening);
+        // to open the chest Quaternion.Euler(-90,0,0)
+        // to close the chest Quaternion.Euler(0,0,0)
     }
     public void SetUsed(bool state)
     {
@@ -23,6 +32,7 @@ public class ChestManager : MonoBehaviour
     {
         uiManager.ProcessUI(true);
         uiManager.ProcessChestUI(true);
+        OpenChestModel();
     }
     void CloseUI()
     {
@@ -44,6 +54,8 @@ public class ChestManager : MonoBehaviour
                 UnableChest();
             }
         }
+        
+        
     }
 
     private void UnableChest()
