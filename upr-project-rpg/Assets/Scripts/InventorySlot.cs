@@ -21,7 +21,11 @@ public class InventorySlot : MonoBehaviour
             {
                 //Debug.LogWarning("ACTIVE SELF CHANGED");
                 isChestUIActive = true;
+                stashButton.interactable = true;
             }
+        } else
+        {
+                 stashButton.interactable = false;
         }
        
     }
@@ -30,8 +34,8 @@ public class InventorySlot : MonoBehaviour
         item = newItem;
         icon.sprite = item.sprite;
         icon.enabled = true;
-        removeButton.interactable = true;  
-        stashButton.interactable = true;
+        removeButton.interactable = true;
+        //stashButton.interactable = true;
       
     }
     public void ClearSlot()
@@ -50,7 +54,7 @@ public class InventorySlot : MonoBehaviour
     }
     public void OnStashButtonClicked()
     {
-        if(isChestUIActive == true)
+        if(isChestUIActive == true && item != null)
         {
             ChestInventory.instance.AddToChest(item);
             Inventory.instance.RemoveItem(item);
