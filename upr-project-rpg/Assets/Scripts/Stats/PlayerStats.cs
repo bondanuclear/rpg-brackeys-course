@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerStats : CharacterStats
 {
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         EquipmentManager.instance.onEquipmentChanged += UpdateModifiers;
     }
 
-  
+    
     public void UpdateModifiers(Equipment newItem, Equipment oldItem)
     {
         if(newItem != null)

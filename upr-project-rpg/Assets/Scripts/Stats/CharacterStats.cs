@@ -7,17 +7,17 @@ public class CharacterStats : MonoBehaviour
 {
     public Stat damage;
     public Stat armor;
-    public int maxHealth = 100;
-    private int currentHealth;
+    //public int maxHealth = 100;
+    [SerializeField] private float currentHealth;
 
-    private void Awake() {
-        currentHealth = maxHealth;
+    private void Start() {
+        currentHealth = GetComponent<BaseStats>().GetStat(StatEnum.Health);
     }
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            TakeDamage(10);
-        }
+        // if(Input.GetKeyDown(KeyCode.T))
+        // {
+        //     TakeDamage(10);
+        // }
     }
     public void TakeDamage(int damage)
     {
@@ -26,6 +26,7 @@ public class CharacterStats : MonoBehaviour
 
 
         currentHealth -= damage;
+        
         Debug.Log("Player is taking " + damage + " damage.");    
         if(currentHealth <= 0)
         {

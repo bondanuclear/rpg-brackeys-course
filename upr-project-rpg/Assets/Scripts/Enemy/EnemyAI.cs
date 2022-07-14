@@ -7,10 +7,12 @@ public class EnemyAI : MonoBehaviour
 {
     NavMeshAgent agent;
     Transform target;
+    Fighter fighter;
     [SerializeField] float radius = 8f;
     private void Start() {
         agent = GetComponent<NavMeshAgent>();
         target = PlayerManager.instance.player.transform;
+        fighter = GetComponent<Fighter>();
     }
     private void Update() {
         float distance = Vector3.Distance(target.position, transform.position);
@@ -21,6 +23,7 @@ public class EnemyAI : MonoBehaviour
             {
                 // attack the target
                 FaceTarget();
+                fighter.Attack(target);
             }
         }
     }

@@ -90,7 +90,8 @@ public class ChestManager : MonoBehaviour
         
         
     }
-
+        // if needed, make this method of type IEnumerator, so that we can't open chest until
+        // it's fully closed
     private void UnableChest()
     {
         StartCoroutine(ProcessCloseChest());

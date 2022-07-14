@@ -8,5 +8,7 @@ public class Enemy : Interactable
     {
         base.Interact();
         // attack the enemy
+        GameObject player = PlayerManager.instance.player;
+        player.GetComponent<Fighter>().Attack(transform);
     }
 }
