@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,37 +7,79 @@ using UnityEngine;
 public class Fighter : MonoBehaviour
 {
     [SerializeField] float timeBetweenHits = 1.2f;
+    public float rangeOfAttack = 1.5f;
+    [SerializeField] float delayOfAttack = 0.5f;
+    [SerializeField] float combatCooldown = 4f;
+    float timeSinceLastAttack;
     float coolDown;
     CharacterStats characterStats;
     Transform target = null;
     BaseStats baseStats;
+    public event Action OnAttack;
+    
+    public bool inCombat {get; private set;}
+    // private void OnEnable() {
+    //     EquipmentManager.instance.onEquipmentChanged += AdjustRange;
+    // }
+
+    // private void AdjustRange(Equipment newItem, Equipment oldItem)
+    // {
+    //     if(gameObject.tag != "Player") return;
+        
+    //     if(newItem.equipmentSlot != EquipmentSlot.Weapon) return;
+    //     Debug.Log(newItem.name + "NEW ITEM NAME");Debug.Log(newItem.name + "NEW ITEM NAME");
+    //     if(newItem != null)
+    //     {
+    //          Weapon weapon = (Weapon)newItem;
+    //          rangeOfAttack = weapon.attackRange;
+    //     }
+    // }
+
     // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
         baseStats = GetComponent<BaseStats>();
         characterStats = GetComponent<CharacterStats>();
     }
     public void Attack(Transform objectToAttack)
     {
-        Hit(objectToAttack);
-    }
-    public void Hit(Transform objectToAttack)
-    {
         target = objectToAttack;
-        if(target == null) return;
+        if (target == null) return;
         CharacterStats characterStatsTarget = target.GetComponent<CharacterStats>();
-        
-        if(coolDown >= timeBetweenHits)
+
+        if (coolDown >= timeBetweenHits)
         {
             coolDown = 0;
-            int damage = characterStats.damage.GetStat() + (int)baseStats.GetStat(StatEnum.Damage);
-            characterStatsTarget.TakeDamage(damage);
+            if(OnAttack != null)
+            {
+                OnAttack();
+            }
+            StartCoroutine(DoDamage(characterStatsTarget, delayOfAttack));
+            inCombat = true;
+            timeSinceLastAttack = Time.time;
             //Debug.Log($"{characterStatsTarget.name} took" + damage + " damage");
         }
     }
-    // Update is called once per frame
+
+    private IEnumerator DoDamage(CharacterStats characterStatsTarget, float delayOfAttack)
+    {
+        yield return new WaitForSeconds(delayOfAttack);
+        int damage = characterStats.damage.GetStat() + (int)baseStats.GetStat(StatEnum.Damage);
+        characterStatsTarget.TakeDamage(damage, gameObject);
+        if(characterStatsTarget.CurrentHealth <= 0)
+        {
+            inCombat = false;
+        }
+    }
+
+    
     void Update()
     {
         coolDown += Time.deltaTime;
+        if(Time.time - timeSinceLastAttack > combatCooldown)
+        {
+            inCombat = false;
+        }
     }
 }

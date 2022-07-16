@@ -29,6 +29,11 @@ public class Progression : ScriptableObject {
             lookUpTable[item.characterClass] = lookUpHelper;
         }
     }
+    public int GetLength(CharacterClass characterClass, StatEnum statEnum)
+    {
+        if(lookUpTable == null) BuildLookUpTable();
+        return lookUpTable[characterClass][statEnum].Length;
+    }
     public float GetStat(CharacterClass characterClass, StatEnum stat, int level)
     {
         if (lookUpTable == null) {BuildLookUpTable();}

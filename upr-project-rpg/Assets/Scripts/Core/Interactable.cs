@@ -7,15 +7,16 @@ public class Interactable : MonoBehaviour
    public Transform placeToStop;
     [SerializeField] float radius;
     public float Radius {get {return radius;}}
-    Transform player;
-    bool isFocused = false;
+    protected Transform player;
+    protected bool isFocused = false;
     bool hasInteracted = false;
     // Start is called before the first frame update
     public virtual void Interact()
     {
-        Debug.Log("Interacting with " + transform.name);
+        //Debug.Log("Interacting with " + transform.name);
+        //
     }
-    private void Start() {
+    protected virtual void Start() {
         if (placeToStop == null) placeToStop = transform;
     }
     private void Update()

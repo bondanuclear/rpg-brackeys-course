@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99d6ee03c90a66a4b9307e7e8e49f04d, type: 3}
-  m_Name: SwordOfFallenVisage
+  m_Name: SwordOfHesitance
   m_EditorClassIdentifier: 
-  name: Sword Of Fallen Visage
-  sprite: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  name: Sword Of Hesitance
+  sprite: {fileID: 21300000, guid: fdc5fee414ce37047b57d20f36ecaadb, type: 3}
   isDefaultItem: 0
-  attackModifier: 12
+  attackModifier: 3
   defenseModifier: 0
   equipmentSlot: 3
-  attackRange: 20
+  attackRange: 2
