@@ -9,9 +9,12 @@ public class CharacterStats : MonoBehaviour
     public Stat armor;
     //public int maxHealth = 100;
     [SerializeField] private float currentHealth;
-    public float CurrentHealth {get {return currentHealth;}}
+    protected float maxHealth;
+    public float CurrentHealth {get {return currentHealth;} set {currentHealth = value; } }
+    public float MaxHealth { get { return maxHealth; } }
     private void Start() {
         currentHealth = GetComponent<BaseStats>().GetStat(StatEnum.Health);
+        maxHealth = currentHealth;
     }
     private void Update() {
         // if(Input.GetKeyDown(KeyCode.T))

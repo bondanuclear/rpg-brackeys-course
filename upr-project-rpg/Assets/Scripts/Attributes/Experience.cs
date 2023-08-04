@@ -15,7 +15,7 @@ public class Experience : MonoBehaviour
     public void GainExperience(float reward)
     {
         currentExperience += reward;
-        if(OnLevelUp != null) OnLevelUp();
+        OnLevelUp?.Invoke();
     }
 
 }

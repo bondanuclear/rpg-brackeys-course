@@ -11,6 +11,8 @@ public class BaseStats : MonoBehaviour
     [SerializeField] Progression progression;
     Experience experience;
     int currentLevel = 0;
+    public int CurrentLevel {get {return currentLevel;}}
+    public event Action HasLeveledUp;
     private void Start() {
         currentLevel = CalculateLevel();
         experience = GetComponent<Experience>();
@@ -26,8 +28,8 @@ public class BaseStats : MonoBehaviour
         if(newLevel > currentLevel)
         {
             currentLevel = newLevel;
-            Debug.Log("Level up!");
-
+            Debug.Log($"Level up! Your current level is {currentLevel}");
+            HasLeveledUp?.Invoke();
         }
     }
 

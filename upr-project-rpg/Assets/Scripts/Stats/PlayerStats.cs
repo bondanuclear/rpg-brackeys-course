@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,16 @@ public class PlayerStats : CharacterStats
     void OnEnable()
     {
         EquipmentManager.instance.onEquipmentChanged += UpdateModifiers;
+        GetComponent<BaseStats>().HasLeveledUp += UpdateHealth;
     }
 
-    
+    private void UpdateHealth()
+    {
+        maxHealth = GetComponent<BaseStats>().GetStat(StatEnum.Health);
+        CurrentHealth = maxHealth;
+        Debug.Log($"Now maxHealth equals to {maxHealth}");
+    }
+
     public void UpdateModifiers(Equipment newItem, Equipment oldItem)
     {
         if(newItem != null)

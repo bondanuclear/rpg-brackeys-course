@@ -16,7 +16,7 @@ public class Fighter : MonoBehaviour
     Transform target = null;
     BaseStats baseStats;
     public event Action OnAttack;
-    
+    float statAttackPower;
     public bool inCombat {get; private set;}
     // private void OnEnable() {
     //     EquipmentManager.instance.onEquipmentChanged += AdjustRange;
@@ -42,6 +42,18 @@ public class Fighter : MonoBehaviour
         baseStats = GetComponent<BaseStats>();
         characterStats = GetComponent<CharacterStats>();
     }
+    private void Start() {
+        statAttackPower = baseStats.GetStat(StatEnum.Damage);
+    }
+    private void OnEnable() {
+        baseStats.HasLeveledUp += UpdateAttackPower;
+    }
+
+    private void UpdateAttackPower()
+    {
+        statAttackPower = baseStats.GetStat(StatEnum.Damage);
+    }
+
     public void Attack(Transform objectToAttack)
     {
         target = objectToAttack;
@@ -51,10 +63,7 @@ public class Fighter : MonoBehaviour
         if (coolDown >= timeBetweenHits)
         {
             coolDown = 0;
-            if(OnAttack != null)
-            {
-                OnAttack();
-            }
+            OnAttack?.Invoke();
             StartCoroutine(DoDamage(characterStatsTarget, delayOfAttack));
             inCombat = true;
             timeSinceLastAttack = Time.time;
@@ -65,7 +74,7 @@ public class Fighter : MonoBehaviour
     private IEnumerator DoDamage(CharacterStats characterStatsTarget, float delayOfAttack)
     {
         yield return new WaitForSeconds(delayOfAttack);
-        int damage = characterStats.damage.GetStat() + (int)baseStats.GetStat(StatEnum.Damage);
+        int damage = characterStats.damage.GetStat() + (int)statAttackPower;
         characterStatsTarget.TakeDamage(damage, gameObject);
         if(characterStatsTarget.CurrentHealth <= 0)
         {
