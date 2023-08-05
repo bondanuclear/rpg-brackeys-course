@@ -11,7 +11,10 @@ public class PlayerStats : CharacterStats
         EquipmentManager.instance.onEquipmentChanged += UpdateModifiers;
         GetComponent<BaseStats>().HasLeveledUp += UpdateHealth;
     }
-
+    private void OnDisable() {
+        EquipmentManager.instance.onEquipmentChanged -= UpdateModifiers;
+        GetComponent<BaseStats>().HasLeveledUp -= UpdateHealth;
+    }
     private void UpdateHealth()
     {
         maxHealth = GetComponent<BaseStats>().GetStat(StatEnum.Health);

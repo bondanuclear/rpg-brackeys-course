@@ -48,7 +48,9 @@ public class Fighter : MonoBehaviour
     private void OnEnable() {
         baseStats.HasLeveledUp += UpdateAttackPower;
     }
-
+    private void OnDisable() {
+        baseStats.HasLeveledUp -= UpdateAttackPower;
+    }
     private void UpdateAttackPower()
     {
         statAttackPower = baseStats.GetStat(StatEnum.Damage);

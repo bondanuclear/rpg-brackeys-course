@@ -15,6 +15,9 @@ public class HUD : MonoBehaviour
     {
         playerStats = FindObjectOfType<PlayerManager>().player.GetComponent<PlayerStats>();
     }
+    private void Start() {
+        
+    }
     private void OnEnable() {
         playerStats.GetComponent<BaseStats>().HasLeveledUp += UpdateLevelHUD;
     }
@@ -23,7 +26,7 @@ public class HUD : MonoBehaviour
     }
     private void UpdateLevelHUD()
     {
-        levelText.text = "Level: " + playerStats.GetComponent<BaseStats>().CurrentLevel;
+        levelText.text = playerStats.GetComponent<BaseStats>().CurrentLevel.ToString();
     }
 
     
