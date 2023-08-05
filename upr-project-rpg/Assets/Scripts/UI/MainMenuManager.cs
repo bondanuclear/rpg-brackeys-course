@@ -10,11 +10,25 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Button newGameButton;
     [SerializeField] Button settingButton;
     [SerializeField] Button exitButton;
-    
+
+    [SerializeField] GameObject loadingScreen;
+    [SerializeField] Slider slider;
     public void LoadLevelAsync(int indexOfLevel)
     {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(indexOfLevel);
-        Debug.Log($"progress {asyncOperation.progress}");
+        StartCoroutine(Loader(indexOfLevel));
+        
+
+    }
+    IEnumerator Loader(int index)
+    {
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(index);
+        loadingScreen.SetActive(true);
+        while(!asyncOperation.isDone)
+        {
+            float progress = asyncOperation.progress / 0.9f;
+            slider.value = progress;
+            yield return null;
+        }
     }
 
 }
